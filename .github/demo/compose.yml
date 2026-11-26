@@ -1,0 +1,49 @@
+# The pack's demo: the official full-stack FastAPI template, as it ships, on Docker Compose without its proxy and its
+# database admin. Postgres 18 (the template's version) and a mail catcher, pinned by digest; the app is the
+# template's own image (its backend/Dockerfile: bun builds the front end, Python 3.14 runs FastAPI, which serves the
+# API under /api/v1 and the built front end), on 127.0.0.1. .github/scripts/build-demo.sh writes the settings.
+name: fastapi-steps-demo
+services:
+  db:
+    # postgres:18
+    image: postgres@sha256:c699303802144847d238196173655dbbecf7a96aeca1565f2b02eb671a1f0b6b
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d app"]
+      interval: 3s
+      retries: 40
+      start_period: 5s
+      timeout: 5s
+    volumes:
+      - db-data:/var/lib/postgresql
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?}
+      POSTGRES_DB: app
+  mail:
+    # axllent/mailpit:v1.29
+    image: axllent/mailpit@sha256:757f22b56c1da03570afdb3d259effe5091018008a81bbedc8158cee7e16fdbc
+    ports:
+      - "127.0.0.1:${MAIL_PORT:-8525}:8025"
+  backend:
+    image: fastapi-steps-demo-backend:0.12.0
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PROJECT_NAME: ${PROJECT_NAME:?}
+      SECRET_KEY: ${SECRET_KEY:?}
+      FIRST_SUPERUSER: ${FIRST_SUPERUSER:?}
+      FIRST_SUPERUSER_PASSWORD: ${FIRST_SUPERUSER_PASSWORD:?}
+      SMTP_HOST: mail
+      SMTP_PORT: "1025"
+      SMTP_TLS: "false"
+      EMAILS_FROM_EMAIL: info@example.com
+      FRONTEND_HOST: http://127.0.0.1:${PORT:-8501}
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:?}@db:5432/app
+    command: ["fastapi", "run", "--workers", "1"]
+    ports:
+      - "127.0.0.1:${PORT:-8501}:8000"
+volumes:
+  db-data:
