@@ -1,0 +1,70 @@
+{
+  "name": "@webship-js/fastapi-steps",
+  "version": "2.0.0",
+  "description": "Cucumber step definitions for FastAPI apps, a plugin for webship-js (Playwright and Cucumber): steps that sign in through the API's own token address, read its refusals field by field, check its answers against the schema it documents, use its interactive docs, and wait on the calls its front end sends, never on a fixed time.",
+  "main": "tests/step-definitions/fastapi-helpers.js",
+  "files": [
+    "tests/step-definitions/",
+    "tests/features/",
+    "assets/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "cucumber-js --config cucumber.js",
+    "test:dry": "cucumber-js --config cucumber.js --dry-run",
+    "test:examples": "node tests/check-examples.js",
+    "test:paths": "node tests/check-paths.js",
+    "test:must-fail": "node tests/check-must-fail.js",
+    "test:chromium": "BROWSER=chromium cucumber-js --config cucumber.js",
+    "test:firefox": "BROWSER=firefox cucumber-js --config cucumber.js",
+    "test:webkit": "BROWSER=webkit cucumber-js --config cucumber.js",
+    "test:headed": "HEADLESS=false cucumber-js --config cucumber.js",
+    "generate-reports": "generate-reports",
+    "test:fast": "SLOW_MO=0 cucumber-js --config cucumber.js",
+    "demo:build": "bash .github/scripts/build-demo.sh",
+    "demo:remove": "bash .github/scripts/remove-demo.sh"
+  },
+  "keywords": [
+    "webship-js",
+    "fastapi",
+    "openapi",
+    "swagger-ui",
+    "oauth2",
+    "rest-api",
+    "python",
+    "cucumber",
+    "cucumber-js",
+    "playwright",
+    "bdd",
+    "testing",
+    "e2e",
+    "gherkin"
+  ],
+  "author": "Webship.co",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webship/fastapi-steps.git"
+  },
+  "bugs": {
+    "url": "https://github.com/webship/fastapi-steps/issues"
+  },
+  "homepage": "https://github.com/webship/fastapi-steps#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">= 24.0"
+  },
+  "peerDependencies": {
+    "webship-js": "^2.0.19"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.0",
+    "webship-js": "^2.0.19"
+  },
+  "overrides": {
+    "@cucumber/cucumber": "^12"
+  }
+}
