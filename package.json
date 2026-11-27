@@ -1,6 +1,6 @@
 {
   "name": "@webship-js/fastapi-steps",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Cucumber step definitions for FastAPI apps, a plugin for webship-js (Playwright and Cucumber): steps that sign in through the API's own token address, read its refusals field by field, check its answers against the schema it documents, use its interactive docs, and wait on the calls its front end sends, never on a fixed time.",
   "main": "tests/step-definitions/fastapi-helpers.js",
   "files": [
