@@ -90,6 +90,12 @@ require: [
 ],
 ```
 
+In the [Webship Workspace](https://github.com/webship/workspace), the Extra steps panel suggests a pack from what a
+site's front page shows, following its redirects on the same host. It finds this pack from FastAPI's docs pages:
+`/docs` or `/redoc` as FastAPI writes them, whose icon is FastAPI's. An app whose front page is, or sends to, one of
+them is suggested. An app whose front page is its own front end, as the full-stack template's is, is not, so add the
+pack by name there. The Workspace's FastAPI plugin adds it in the testing setup of an app of its builder.
+
 ## Quick start
 
 ```gherkin
